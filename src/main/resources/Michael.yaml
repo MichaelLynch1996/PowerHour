@@ -1,0 +1,118 @@
+openapi: 3.0.2
+info:
+  title: Mike's API
+  description: Mike's sample yaml
+  version: 0.0.1
+servers:
+  - url: https://michael-testapp.apps.us-oma1-np2.1dc.com/
+    description: PCF Server (dev only)
+paths:
+  /default_user:
+    get:
+      summary: Returns the default user
+      description: Returns the default user
+      parameters:
+        - $ref: '#/components/parameters/ContentTypeParam'
+      responses:
+        '200':    # status code
+          description: A JSON array of user id + name
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultUserResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        403:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+components:
+  #------------------------------------------------------------------------------
+  # Parameter Models
+  #------------------------------------------------------------------------------
+  parameters:
+    ContentTypeParam:
+      name: Content-Type
+      schema:
+        type: string
+        enum: ['application/json']
+        default: application/json
+      in: header
+      required: true
+      description: 'The content type.'
+  #------------------------------------------------------------------------------
+  # HTTP Response Models
+  #------------------------------------------------------------------------------
+  responses:
+    BadRequest:
+      description: 'The request cannot be validated.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: 'The request was unauthorized.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: 'The requested resource does not exist.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ServerError:
+      description: 'An unexpected internal server error occurred.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  #-------------------------------------------------------------------------------
+  # Schemas
+  #-------------------------------------------------------------------------------
+  schemas:
+    #-----------------------------------------------------------------------------
+    # Models
+    #-----------------------------------------------------------------------------
+    DefaultUserResponse:
+      description: 'Contains userId and userName for default user'
+      properties:
+        userId:
+          description: 'userId of default user'
+          type: integer
+          example: '24'
+        userName:
+          description: 'userName of default user'
+          type: string
+          example: 'Mike'
+        responseType:
+          $ref: '#/components/schemas/ResponseType'
+    ErrorResponse:
+      description: 'Response containing an error object.'
+      allOf:
+        - $ref: '#/components/schemas/DefaultUserResponse'
+        - properties:
+            error:
+              $ref: '#/components/schemas/Error'
+    Error:
+      description: Error information.
+      properties:
+        code:
+          description: 'Uniquely identifies an error condition. Client applications need to read and handle errors based on this.'
+          type: string
+          example: '2303'
+        message:
+          description: 'A generic description of the error condition.'
+          type: string
+          example: 'Invalid request'
+      example:
+        code: '2303'
+        message: 'Invalid request'
+    ResponseType:
+      description: 'The type of the response.'
+      type: string
+      enum: ['BadRequest', 'Unauthorized', 'NotFound', 'ServerError']
+      example: 'Unauthenticated'
