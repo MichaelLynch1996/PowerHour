@@ -65,19 +65,19 @@
 						</goals>
 						<configuration>
 							<inputSpec>${project.basedir}/src/main/resources/Michael.yaml</inputSpec>
-							<output>${project.basedir}/src/main/java/codegen</output>
-							<generatorName>spring</generatorName>
-							<modelPackage>default-user.model</modelPackage>
-							<apiPackage>default-user</apiPackage>
-							<configOptions>
-								<sourceFolder>openapi</sourceFolder>
-								<library>spring-mvc</library>
-								<interfaceOnly>true</interfaceOnly>
-								<useBeanValidation>true</useBeanValidation>
-								<dateLibrary>java8</dateLibrary>
-								<java8>true</java8>
-								<useTags>true</useTags>
-							</configOptions>
+ 							<output>target/generated-sources/gateway-services</output>
+                            <generatorName>spring</generatorName>
+                            <modelPackage>com.fiserv.globalapi.openapi.model</modelPackage>
+                            <apiPackage>com.fiserv.globalapi.openapi</apiPackage>
+                            <configOptions>
+                                <sourceFolder>openapi</sourceFolder>
+                                <library>spring-mvc</library>
+                                <interfaceOnly>true</interfaceOnly>
+                                <useBeanValidation>true</useBeanValidation>
+                                <dateLibrary>java8</dateLibrary>
+                                <java8>true</java8>
+                                <useTags>true</useTags>
+                            </configOptions>
 						</configuration>
 					</execution>
 				</executions>

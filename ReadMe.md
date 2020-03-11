@@ -1,0 +1,2 @@
+- mvn spring-boot:run
+- http://localhost:2000/hello
