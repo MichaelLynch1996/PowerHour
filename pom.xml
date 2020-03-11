@@ -65,10 +65,10 @@
 						</goals>
 						<configuration>
 							<inputSpec>${project.basedir}/src/main/resources/Michael.yaml</inputSpec>
-							<output>target/generated-sources</output>
+							<output>${project.basedir}/src/main/java/codegen</output>
 							<generatorName>spring</generatorName>
-							<modelPackage>default-user.openapi.model</modelPackage>
-							<apiPackage>default-user.openapi</apiPackage>
+							<modelPackage>default-user.model</modelPackage>
+							<apiPackage>default-user</apiPackage>
 							<configOptions>
 								<sourceFolder>openapi</sourceFolder>
 								<library>spring-mvc</library>
